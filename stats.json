@@ -1,0 +1,67 @@
+
+ WARNING  Compiled with 2 warnings下午6:23:24
+
+ warning  
+
+asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  css/antdesignVue.09af4a6b.css (458 KiB)
+  js/antdesigns.b52e82e0.js (488 KiB)
+  js/vendors~app.5f36c052.js (549 KiB)
+
+ warning  
+
+entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  app (1.58 MiB)
+      css/antdesignVue.09af4a6b.css
+      js/antdesignVue.df83936f.js
+      js/antdesigns.b52e82e0.js
+      css/vendors~app.6a10e993.css
+      js/vendors~app.5f36c052.js
+      css/app.46d3ffc5.css
+      js/app.668d2554.js
+
+
+Webpack Bundle Analyzer is started at http://127.0.0.1:8888
+Use Ctrl+C to close it
+  File                                    Size              Gzipped
+
+  dist/js/vendors~app.5f36c052.js         548.85 KiB        162.54 KiB
+  dist/js/antdesigns.b52e82e0.js          487.81 KiB        149.20 KiB
+  dist/js/antdesignVue.df83936f.js        49.82 KiB         15.06 KiB
+  dist/js/chunk-4b675dd5.155d99f3.js      40.14 KiB         14.38 KiB
+  dist/js/app.668d2554.js                 23.31 KiB         7.01 KiB
+  dist/js/chunk-ee00a4f6.5ac7608a.js      3.48 KiB          1.33 KiB
+  dist/js/chunk-7fc3f874.9e8e0a4c.js      3.12 KiB          1.25 KiB
+  dist/js/chunk-0d5cd8dc.ad9a0a22.js      3.09 KiB          1.36 KiB
+  dist/js/chunk-398167c8.7da7d5ac.js      2.30 KiB          1.16 KiB
+  dist/js/chunk-382e6394.5dc94cf0.js      1.78 KiB          0.83 KiB
+  dist/js/chunk-d0d4bd10.3ae2f32a.js      1.65 KiB          0.88 KiB
+  dist/js/chunk-eb80bc22.b921a12e.js      1.40 KiB          0.80 KiB
+  dist/js/chunk-5fffc146.49ebd59f.js      1.36 KiB          0.74 KiB
+  dist/js/chunk-de61879c.1fa1155f.js      1.30 KiB          0.71 KiB
+  dist/js/chunk-a967b116.bfd40ccd.js      0.67 KiB          0.40 KiB
+  dist/js/chunk-2d217e4d.2f68439d.js      0.51 KiB          0.37 KiB
+  dist/js/chunk-7774ca18.d203c0c8.js      0.47 KiB          0.33 KiB
+  dist/css/antdesignVue.09af4a6b.css      458.26 KiB        56.06 KiB
+  dist/css/vendors~app.6a10e993.css       35.45 KiB         7.60 KiB
+  dist/css/app.46d3ffc5.css               13.02 KiB         2.05 KiB
+  dist/css/chunk-7fc3f874.f4e877c9.css    5.72 KiB          0.83 KiB
+  dist/css/chunk-0d5cd8dc.6cd5b8b0.css    5.50 KiB          0.82 KiB
+  dist/css/chunk-ee00a4f6.8fbc3d4d.css    3.39 KiB          0.65 KiB
+  dist/css/chunk-398167c8.d8939721.css    2.67 KiB          0.54 KiB
+  dist/css/chunk-382e6394.c7c2314a.css    2.37 KiB          0.46 KiB
+  dist/css/chunk-de61879c.65e3ba8a.css    1.12 KiB          0.26 KiB
+  dist/css/chunk-d0d4bd10.641ea7e0.css    0.92 KiB          0.29 KiB
+  dist/css/chunk-eb80bc22.4d09bf3b.css    0.49 KiB          0.21 KiB
+  dist/css/chunk-a967b116.c0a28d23.css    0.21 KiB          0.16 KiB
+  dist/css/chunk-5fffc146.fa51706c.css    0.08 KiB          0.09 KiB
+  dist/css/chunk-7774ca18.555c14e2.css    0.04 KiB          0.06 KiB
+
+  Images and other types of assets omitted.
+
+ DONE  Build complete. The dist directory is ready to be deployed.
+ INFO  Check out deployment instructions at https://cli.vuejs.org/guide/deployment.html
+      
