@@ -2,9 +2,13 @@
 
 ### PC端
 
+<img src="https://cdn.homeblog.top/uPic/5RX0yf.png">
+
+<br>
+
 <img src="https://cdn.homeblog.top/uPic/ttvbUW.png">
 <br>
-<img src="https://cdn.homeblog.top/uPic/5RX0yf.png">
+
 <br>
 
 <img src="https://cdn.homeblog.top/uPic/jgRbUk.png">
@@ -70,6 +74,52 @@ vue cli4 + vue Router + vuex + webpack + express
 2. 语言板块用flex wrap进行宫格布局
 3. 日语文章内的音频使用blob链接转化
 4. 用伪类及css绑定attr进行动态数组绑定（在不改动业务逻辑的情况下，添加移动端的书籍简介展示）
+
+<br>
+<br>
+
+## 项目架构
+
+### 一、数据库
+
+> | 表名      | 介绍             |
+> | --------- | ---------------- |
+> | article   | 前端的技术文章   |
+> | network   | 计算机网络的文章 |
+> | language  | 语言板块         |
+> | recent    | 个人动态         |
+> | book      | 书库             |
+> | operation | 操作系统的文章   |
+
+<br>
+
+### 二、API文档
+
+<div><a href="https://documenter.getpostman.com/view/15325162/UVsLSSSn">API文档</div>
+
+<br>
+
+### 三、页面
+
+<img src="https://cdn.homeblog.top/uPic/Kr56yG.png">
+
+
+
+<br>
+
+## 自动化部署
+
+### 前端
+
+> 采用 scp2 进行 ssh 与服务器的连接，进行 vue 项目打包的 dist 文件进行上传，实现全自动【先删除掉网站在服务器的文件，再传输上去】
+
+<img src="https://cdn.homeblog.top/uPic/NT5aJr.png">
+
+### 后端
+
+> 采用微信云托管，代码放在GitHub上，有更新的时候，进行流水线更新
+
+<img src="https://cdn.homeblog.top/uPic/mBQV7h.png">\
 
 <br>
 
