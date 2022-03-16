@@ -122,38 +122,42 @@ export default {
 </script>
 <style lang="less" scoped>
 @media screen and (min-width: 1100px) {
-  .editor {
-    .up {
-      display: flex;
-      justify-content: space-between;
-      margin-left: 160px;
-      margin-right: 160px;
+  .root {
+    position: relative;
+    top: -5px;
+    .editor {
+      .up {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 160px;
+        margin-right: 160px;
 
-      .title {
-        margin-right: 25px;
-      }
+        .title {
+          margin-right: 25px;
+        }
 
-      .info {
-        margin-left: 25px;
-      }
+        .info {
+          margin-left: 25px;
+        }
 
-      .button {
-        position: absolute;
-        right: 0;
+        .button {
+          position: absolute;
+          right: 0;
 
-        button {
-          background-color: lightblue;
-          width: 120px;
-          height: 44px;
-          border: none;
+          button {
+            background-color: lightblue;
+            width: 120px;
+            height: 44px;
+            border: none;
+          }
         }
       }
-    }
 
-    .down {
-      width: 1150px;
-      margin-left: 150px;
-      margin-right: 150px;
+      .down {
+        width: 1150px;
+        margin-left: 150px;
+        margin-right: 150px;
+      }
     }
   }
 }
