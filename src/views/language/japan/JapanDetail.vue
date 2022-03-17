@@ -41,12 +41,6 @@ export default {
     this.id = this.$store.state.japanId;
     var url = "/language/api/getAudioById?id=" + String(this.id);
     this.$http.get(url).then((res) => {
-      // console.log("获取音频连接~");
-      // console.log(res);
-      // var blob = new Blob([res.data[0]], { type: "audio/mpeg" });
-      // var audio = URL.createObjectURL(blob);
-      // this.audio = audio;
-      // console.log(audio);
 
       var BASE64_MARKER = ";base64,";
       var dataURI = res.data[0].audio;

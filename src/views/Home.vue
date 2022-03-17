@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import arrayMethods from '../utils/newArray';
 export default {
   data() {
     return {
@@ -76,6 +77,7 @@ export default {
   },
 
   mounted: function () {
+    this.allList._proto_ = arrayMethods
     this.$http.get("/recent/api/getAllRecent").then((res) => {
       res.data.data.forEach((item) => {
         this.allList.push(item);
@@ -137,6 +139,7 @@ export default {
         this.isPop = true;
         console.log(this.isPop);
         this.hide = "blur(5px)";
+        this.allList.push({content: this.content})
       }
     },
   },
