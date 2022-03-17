@@ -53,7 +53,7 @@
 ## 技术栈
 
 ```
-vue cli4 + vue Router + vuex + webpack + express
+vue cli4 + vue Router + vuex + webpack + express + MySQL serverless
 ```
 
 ## 页面
@@ -76,6 +76,35 @@ vue cli4 + vue Router + vuex + webpack + express
 4. 用伪类及css绑定attr进行动态数组绑定（在不改动业务逻辑的情况下，添加移动端的书籍简介展示）
 
 <br>
+
+## 项目优化
+
+### 分割代码之前
+
+<img src="https://cdn.homeblog.top/uPic/sOBylz.png"/>
+
+<br>
+
+### 分割代码后
+
+<img src="https://cdn.homeblog.top/uPic/zwnez4.png"/>
+
+网页请求的TTFB也快了许多
+
+<br>
+
+### 延迟加载css
+
+首屏加载不需要的css文件延迟加载
+
+<img src="https://cdn.homeblog.top/uPic/HRT4jY.png"/>
+
+<br>
+
+### 图片优化
+
+<img src="https://cdn.homeblog.top/uPic/mdOdNB.png">
+
 <br>
 
 ## 项目架构
