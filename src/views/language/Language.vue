@@ -152,6 +152,8 @@ export default {
 
           .image {
             border-radius: 12px;
+            width: 254px;
+            height: 142px;
           }
 
           .title {

@@ -5,8 +5,8 @@ module.exports = {
   },
   chainWebpack: config => {
     config.cache(true)
-    config.plugin('webpack-bundle-analyzer')
-      .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+    // config.plugin('webpack-bundle-analyzer')
+    //   .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
 
     config.plugin('ignore')
       .use(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
@@ -48,9 +48,15 @@ module.exports = {
       }
     })
 
-    // config.optimization.minimizer('terser').tap((args) => {
-    //   args[0].terserOptions.compress.drop_console = true
-    //   return args
-    // })
+    const plugins = [];
+    apply: (compiler) => {
+      // 编译完成后
+      compiler.hooks.done.tap('DonePlugin', compilation => {
+        console.log('编译完成')
+        // 通过配置 package.json , 执行指定node.js脚本
+        exec('npm run upload', { stdio: 'inherit' });
+      });
+    }
+    return { plugins }
   }
 }
