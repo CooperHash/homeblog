@@ -9,6 +9,9 @@
     <div class="left"></div>
     <div class="middle">
       <div class="category">
+        <!-- <div class="navList">
+          <Menu :menuList="menu"></Menu>
+        </div> -->
         <div
           class="navList"
           @click="toDiff(item.id)"
@@ -19,7 +22,7 @@
         </div>
       </div>
       <div class="search">
-        <input v-model="content" placeholder="检索文章" id="search"/>
+        <input v-model="content" placeholder="检索文章" id="search" />
       </div>
       <div class="list">
         <div
@@ -51,6 +54,7 @@
 </template>
 
 <script>
+// import Menu from '../../components/Menu.vue'
 export default {
   data() {
     return {
@@ -66,8 +70,18 @@ export default {
         { id: 7, nav: "FP" },
       ],
       array: [],
+      menu: [
+        { id: 0, name: 'JS'},
+        { id: 1, name: 'Vue'},
+        { id: 2, name: '杂谈'}
+      ]
     };
   },
+
+  // components: {
+  //   Menu
+  // },
+
 
   mounted: function () {
     console.log("欢迎来到文章仓库~");
@@ -82,7 +96,7 @@ export default {
     this.$store.dispatch("setDefaultContent");
 
     const search = document.getElementById("search");
-    var throttled = this.lodash.throttle(this.find, 2000)
+    var throttled = this.lodash.throttle(this.find, 2000);
     search.addEventListener("input", throttled);
   },
 
@@ -162,7 +176,7 @@ export default {
     },
 
     find() {
-      console.log('触发一次搜索');
+      console.log("触发一次搜索");
       var target = this.content;
 
       this.array = [];
@@ -194,34 +208,7 @@ export default {
         margin-right: 20px;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 40px;
 
-        .navList {
-          width: 86px;
-          height: 42px;
-          border-radius: 6px;
-          background-color: #f6f7f8;
-          margin-right: 10px;
-          margin-bottom: 10px;
-          margin-top: 15px;
-          cursor: pointer;
-
-          .nav {
-            color: #61666d;
-            font-weight: 500;
-            padding: 10px 0;
-            font-size: 14px;
-          }
-        }
-        // .all {
-        //   font-weight: 400;
-        //   padding: 8px 0;
-        //   font-size: 12px;
-        //   width: 60px;
-        //   height: 48px;
-        //   border-radius: 12px;
-        //   background-color: lightblue;
-        // }
       }
       .search {
         position: relative;
@@ -293,6 +280,9 @@ export default {
 
 @media all and (max-width: 450px) {
   .showArticle_root {
+    background-image: url("https://cdn.homeblog.top/uPic/PAUVWh.png");
+    background-size: 100%;
+    background-attachment: fixed;
     display: flex;
     .left {
       width: 33%;
@@ -304,37 +294,13 @@ export default {
       .category {
         margin-left: 20px;
         margin-right: 20px;
+        margin-bottom: 40px;
         display: flex;
         flex-wrap: wrap;
-        margin-bottom: 40px;
+        height: 80px;
 
-        .navList {
-          width: 60px;
-          height: 30px;
-          border-radius: 3px;
-          background-color: #f6f7f8;
-          margin-right: 10px;
-          margin-bottom: 10px;
-          margin-top: 15px;
-          display: inline-block;
-          cursor: pointer;
-
-          .nav {
-            color: #61666d;
-            font-weight: 500;
-            padding: 4px 0;
-            font-size: 14px;
-          }
+        .navList {          
         }
-        // .all {
-        //   font-weight: 400;
-        //   padding: 8px 0;
-        //   font-size: 12px;
-        //   width: 60px;
-        //   height: 48px;
-        //   border-radius: 12px;
-        //   background-color: lightblue;
-        // }
       }
       .search {
         position: relative;
