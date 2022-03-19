@@ -39,12 +39,21 @@
 export default {
   data() {
     return {
-      isLogin: false
+      isLogin: false,
+      // token: localStorage.getItem("user_token")
     };
   },
   mounted: function() {
     if(localStorage.getItem('user_token').length !== 0) this.isLogin = true 
   },
+
+  // watch: {
+  //   token: function(newVal, oldVal) {
+  //     console.log('newToken');
+  //     console.log(newVal);
+  //   }
+  // },
+
   methods: {
     toHome() {
       this.$router.push({ path: "/" });
@@ -99,6 +108,9 @@ export default {
       #list {
         overflow: hidden;
         list-style: none;
+
+        display: flex;
+        justify-content: flex-start;
       }
 
       #list li {
@@ -162,24 +174,22 @@ export default {
       #list {
         overflow: hidden;
         list-style: none;
+        display: flex;
+        justify-content: flex-start;
 
         .home {
           position: relative;
-          width: 60px;
-          left: -20px;
+          width: 80px;
         }
 
         .article {
           position: relative;
-          left: 5px;
-          width: 100px;
+          width: 120px;
         }
 
         .keepstudy {
           position: relative;
-          width: 105px;
-          right: -25px;
-          margin-right: 35px;
+          width: 125px;
         }
       }
 

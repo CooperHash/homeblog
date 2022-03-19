@@ -102,10 +102,18 @@ const routes = [
   }
 ]
 
+
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem("user_token");
+//   if(!token) return next('/User')
+//   next()
+// })
 
 export default router

@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import Icon from 'ant-design-vue/lib/icon'
 import Button from 'ant-design-vue/lib/button';
+import Drop from 'ant-design-vue/lib/dropdown'
 import Divider from 'ant-design-vue/lib/divider';
 import Back from 'ant-design-vue/lib/back-top'
 import 'ant-design-vue/dist/antd.css';
@@ -16,6 +17,7 @@ import instance from './utils/http'
 import lodash from 'lodash'
 import Pop from './components/Popout.vue'
 import Flex from './components/Flex.vue'
+import Menu from './components/Menu.vue'
 Vue.component('pop-out',Pop);
 Vue.component('add-article',Add);
 Vue.component('blog-header',Header);
@@ -27,6 +29,8 @@ Vue.component(Icon.name, Icon)
 Vue.component('a-divider',Divider);
 Vue.component('a-back-top',Back);
 Vue.component('flex',Flex);
+Vue.component('a-dropdown',Drop);
+Vue.component('menu',Menu);
 
 Vue.prototype.$http = instance
 Vue.prototype.lodash = lodash
