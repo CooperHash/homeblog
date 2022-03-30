@@ -1,66 +1,54 @@
 <template>
   <div class="reading_root">
-    <div class="reading">
-      <div class="left">
-        <div class="book">
-          <div class="up">
-            <div class="upList" v-for="item in upList" :key="item.id">
-              <div class="nav">{{ item.nav }}</div>
+    <three>
+      <template v-slot:navList>
+        <li :style="validateList.validate1 ? enable : disable">全部</li>
+        <li :style="validateList.validate2 ? enable : disable">文学</li>
+        <li :style="validateList.validate3 ? enable : disable">小说</li>
+        <li :style="validateList.validate1 ? enable : disable">历史文学</li>
+        <li :style="validateList.validate1 ? enable : disable">社会纪实</li>
+        <li :style="validateList.validate1 ? enable : disable">科学</li>
+        <li :style="validateList.validate1 ? enable : disable">艺术设计</li>
+        <li :style="validateList.validate1 ? enable : disable">商业管理</li>
+        <li :style="validateList.validate1 ? enable : disable">投资</li>
+      </template>
+      <template v-slot:bookList>
+        <div class="bookList">
+          <div class="book" v-for="i in downList" :key="i.id">
+            <div class="book-info">
+              <img :src="i.image"/>
+              <div class="book-name">{{i.name}}</div>
+              <div class="book-author">{{i.author.substring(0,8)}}</div>
             </div>
-          </div>
-          <div class="down">
-            <div class="list">
-              <div
-                class="downList"
-                v-for="item in downList"
-                :key="item.id"
-                :data-content="item.id"
-              >
-                <img
-                  :src="item.image"
-                  @click="toBookDetail(item.id)"
-                  rel="preload"
-                  class="book_img"
-                />
-                <div class="name">{{ item.name }}</div>
-                <div class="author">{{ item.author.slice(0, 8) }}</div>
-              </div>
-              <div class="swiper">
-                <div class="to-left" @click="downPage">&lt;</div>
-                <div class="to-right" @click="upPage">&gt;</div>
-              </div>
+            <div class="book-introduce" @click="toBookDetail(i.id)">
             </div>
           </div>
         </div>
-      </div>
-      <!-- <div class="right">
-        <div class="quote">一心只唯热爱二字</div>
-        <div class="image">
-          <img :src="image" />
-        </div>
-      </div> -->
-    </div>
+      </template>
+    </three>
   </div>
 </template>
 
 <script>
+import Three from "../../position/Three.vue";
 export default {
+  components: { Three },
   data() {
     return {
       image: "",
       count: 0,
       page: 0,
-      upList: [
-        { id: 1, nav: "全部" },
-        { id: 2, nav: "文学" },
-        { id: 3, nav: "小说" },
-        { id: 4, nav: "历史文学" },
-        { id: 5, nav: "社会纪实" },
-        { id: 6, nav: "科学新知道" },
-        { id: 7, nav: "艺术设计" },
-        { id: 8, nav: "商业经管" },
-        { id: 9, nav: "绘本漫画" },
-      ],
+      validateList: {
+        validate1: false,
+        validate2: false,
+        validate3: false,
+      },
+      enable: {
+        backgroundColor: "lightskyblue",
+      },
+      disable: {
+        backgroundColor: "#fff",
+      },
 
       downList: [],
     };
@@ -126,21 +114,20 @@ export default {
 
     toBookDetail(id) {
       var p1 = new Promise((resolve, reject) => {
-        resolve('设置好id')
+        resolve("设置好id");
         this.$store.commit("setReading", id);
-      })
+      });
 
       var p2 = new Promise((resolve, reject) => {
-        resolve('设置内容')
+        resolve("设置内容");
         this.$store.dispatch("setAfterReadingList");
-      })
+      });
 
       var p3 = new Promise((resolve, reject) => {
-        resolve('跳转')
+        resolve("跳转");
         this.$router.push({ path: "/ReadingInfo" });
-      })
-      
-      
+      });
+
       Promise.all([p1, p2, p3]).then(
         (values) => {
           console.log(values);
@@ -149,7 +136,6 @@ export default {
           console.log(reason);
         }
       );
-      
     },
   },
 };
@@ -157,138 +143,6 @@ export default {
 
 <style lang="less" scoped>
 @media screen and (min-width: 1100px) {
-  .reading_root {
-    .reading {
-      display: flex;
-      align-items: flex-start;
-      width: 100%;
-
-      .left {
-        width: 60%;
-        height: 600px;
-        background-color: #fff;
-
-        .book {
-          margin-left: 80px;
-          border-radius: 12px;
-          width: 815px;
-          height: 500px;
-          box-sizing: border-box;
-          .up {
-            margin-left: 90px;
-            width: 675px;
-            display: flex;
-            justify-content: space-between;
-            .upList {
-              .nav {
-                cursor: pointer;
-                font-size: 13px;
-                color: #9b9b9b;
-              }
-
-              .nav:active {
-                color: black;
-              }
-            }
-          }
-
-          .down {
-            margin-left: 90px;
-            width: 675px;
-
-            .list {
-              display: flex;
-              flex-wrap: wrap;
-              margin: auto;
-              .downList {
-                margin-right: 21px;
-                margin-bottom: 15px;
-                img {
-                  cursor: pointer;
-                }
-
-                .name {
-                  cursor: pointer;
-                  color: #3377aa;
-                  font-weight: 400;
-                }
-
-                .author {
-                }
-              }
-
-              .swiper {
-                display: flex;
-                justify-content: space-between;
-                position: fixed;
-                top: 520px;
-                margin-left: 200px;
-                width: 260px;
-                background-color: #fff;
-
-                .to-left {
-                  border-radius: 45px;
-                  width: 35px;
-                  height: 35px;
-                  cursor: pointer;
-                  color: #fff;
-                  font-weight: 500;
-                  background-color: black;
-                  font-size: 20px;
-                }
-
-                .to-right {
-                  border-radius: 45px;
-                  font-size: 20px;
-                  width: 35px;
-                  height: 35px;
-                  color: #fff;
-                  font-weight: 500;
-                  background-color: black;
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .right {
-        width: 400px;
-        height: 600px;
-        background-color: #f4f5f5;
-        border-radius: 12px;
-        margin-left: 60px;
-        box-shadow: 0 2px 3px 0 rgb(0, 0, 0 / 2%);
-
-        .quote {
-          font-size: 28px;
-          border-radius: 12px;
-          width: 320px;
-          height: 60px;
-          background-color: #f4f5f5;
-          padding: 6px 0;
-          margin: auto;
-          margin-top: 10px;
-          box-sizing: border-box;
-          box-shadow: 0 1px 1px 0 rgb(0, 0, 0 / 2%);
-          margin-bottom: 20px;
-        }
-
-        .image {
-          width: 320px;
-          height: 460px;
-          background-color: lightblue;
-          margin: auto;
-
-          img {
-            border-radius: 12px;
-            box-shadow: 0 2px 2px 0 rgb(0, 0, 0 / 2%);
-          }
-        }
-      }
-    }
-  }
 }
 
 @media screen and (max-width: 1100px) and (min-width: 600px) {

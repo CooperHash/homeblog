@@ -1,3 +1,4 @@
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const webpack = require('webpack')
 module.exports = {
   devServer: {
@@ -11,6 +12,8 @@ module.exports = {
     config.plugin('ignore')
       .use(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
 
+    config.plugin('speed')
+      .use(SpeedMeasurePlugin)
     config.plugins.delete('prefetch')
 
     config.optimization.splitChunks({

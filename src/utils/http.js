@@ -1,10 +1,11 @@
 import axios from 'axios'
+import Vue from 'vue'
 let instance = axios.create({baseURL: "http://localhost:3004/all"})
 instance.interceptors.request.use(
   config => {
-    if (localStorage.getItem("user_token") !== null) { //判断token是否存在
-      config.headers["Authorization"] = 'Bearer ' + localStorage.getItem("user_token");  //将token设置成请求头
-    }
+    // if (localStorage.getItem("user_token") !== null) { //判断token是否存在
+    //   config.headers["Authorization"] = 'Bearer ' + localStorage.getItem("user_token");  //将token设置成请求头
+    // }
     return config;
   },
   err => {
@@ -13,12 +14,16 @@ instance.interceptors.request.use(
 );
 instance.interceptors.response.use(
   config => {
-    if (localStorage.getItem("user_token")) { //判断token是否存在
-      config.headers.Authorization = 'Bearer ' + localStorage.getItem("user_token");  //将token设置成请求头
-    }
     return config;
   },
   err => {
+    console.log(err.response) 
+    if(err.response.status == "401") {
+      localStorage.removeItem("user_token");
+      setTimeout(() => {
+        Vue.$router.push("/User")
+      }, 1000);
+    }
     return Promise.reject(err);
   }
 );

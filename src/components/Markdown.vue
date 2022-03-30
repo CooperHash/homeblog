@@ -55,7 +55,7 @@ export default {
       content: "",
       title: "",
       info: "",
-      flag: true,
+      flag: this.$store.state.flag,
       finish: true,
 
       contentEditor: {},
@@ -83,6 +83,7 @@ export default {
       toolbar: ["headings", "bold", "italic"],
     });
   },
+
 
   methods: {
     saveArticle() {

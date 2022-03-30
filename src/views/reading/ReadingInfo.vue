@@ -1,36 +1,47 @@
 <template>
   <div class="readingInfo_root">
-    <div id="book">
-      <div class="list">
-        <div class="navList" v-for="item in navList" :key="item.id">
-          <div class="nav">{{ item.nav }}</div>
-        </div>
-      </div>
-      <div class="main">
-        <div class="list">
-          <div
-            class="mainList"
-            v-for="item in mainList"
-            :key="item.id"
-            @click="toDetail(item.id, item.person)"
-          >
-            <div class="person">{{ item.person }}</div>
-            <div class="info">{{ item.info }}</div>
+    <three>
+      <template v-slot:navList>
+        <li :style="validateList.validate1 ? enable : disable">书评</li>
+        <li :style="validateList.validate2 ? enable : disable">讨论</li>
+        <li :style="validateList.validate3 ? enable : disable">读书笔记</li>
+      </template>
+      <template v-slot:reading>
+        <div class="reading">
+          <div class="item" v-for="i in mainList" :key="i.id">
+            <div class="item-person">
+              {{ i.person }}
+            </div>
+            <div class="item-info" @click="toDetail(i.id,i.person)">
+              {{ i.info }}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </three>
   </div>
 </template>
 
 <script>
+import Three from "../../position/Three.vue";
 export default {
+  components: { Three },
   data() {
     return {
       id: 0,
       value: "",
       canEditor: false,
-
+      validateList: {
+        validate1: false,
+        validate2: false,
+        validate3: false,
+      },
+      enable: {
+        backgroundColor: "lightskyblue",
+      },
+      disable: {
+        backgroundColor: "#fff",
+      },
       navList: [
         { id: 1, nav: "书评" },
         { id: 2, nav: "讨论" },
@@ -44,40 +55,19 @@ export default {
   beforeMount: function () {},
 
   mounted: function () {
-    // this.id = this.$store.state.readingId;
-    // var id = 1;
-    // var url = "/book/api/getBookInfoById?id=" + String(this.id);
-    // this.$http.get(url).then((res) => {
-    //   console.log("到达具体书本");
-    //   res.data.forEach((item) => {
-    //     this.mainList.push({
-    //       id: id++,
-    //       person: item.person,
-    //       info: item.info,
-    //     });
-    //   });
-    //   console.log(this.mainList);
-    //   id = 1;
-    // });
     setTimeout(() => {
       this.$store.state.bookList.forEach((item) => {
-      this.mainList.push(item);
-      console.log(item);
-      console.log('item');
-    })
-    },500)
-    // 为什么这里会比vuex慢？
+        this.mainList.push(item);
+        console.log(item);
+        console.log("item");
+      });
+    }, 500);
   },
 
   methods: {
-    editor() {
-      this.canEditor = !this.canEditor;
+    finishWrite() {
+      this.canEditor = false;
     },
-
-    finish() {
-      this.canEditor = !this.canEditor;
-    },
-
     toDetail(id, name) {
       this.$store.commit("setReadingDetailId", id);
       this.$store.commit("setReadingDetailName", name);
@@ -117,6 +107,7 @@ export default {
             position: relative;
             top: 15px;
             font-size: 16px;
+            cursor: pointer;
           }
         }
       }
@@ -158,8 +149,23 @@ export default {
               font-size: 15px;
               font-weight: 500;
               padding: 4px 0 8px 4px;
+              cursor: pointer;
             }
           }
+        }
+      }
+
+      .write {
+        .slide-fade-enter-active {
+          transition: all 0.3s ease;
+        }
+        .slide-fade-leave-active {
+          transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+        }
+        .slide-fade-enter,
+        .slide-fade-leave-to {
+          transform: translateX(10px);
+          opacity: 0;
         }
       }
     }

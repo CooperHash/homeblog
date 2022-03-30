@@ -1,58 +1,49 @@
 <template>
-  <div class="fake_root">
-    <div class="fake_home" :style="{ filter: hide }">
-      <div class="left shadow">
-        <div class="navlist" v-for="item in navList" :key="item.id">
-          <div class="title" @click="toRecentDetail(item.id)">
-            {{ item.title }}
-          </div>
+  <div class="personal">
+    <three :slide="needSlide">
+      <template v-slot:navList>
+        <li :style="validateList.validate1 ? enable : disable">状态机</li>
+        <li :style="validateList.validate2 ? enable : disable">风险</li>
+        <li :style="validateList.validate1 ? enable : disable">投资</li>
+      </template>
+
+      <template v-slot:write>
+        <div class="write">
+          <textarea placeholder="记录当下~"></textarea>
+          <button>发布</button>
         </div>
-      </div>
-      <div class="main">
-        <div class="editor" v-show="isBoss">
-          <div class="add recent">
-            <textarea v-model="content" placeholder="发些近况吧~" />
-          </div>
-          <div class="upload">
-            <div class="upImage" @click="upImage"></div>
-            <div class="submit">
-              <a-button type="primary" @click="submit">发布</a-button>
-            </div>
-          </div>
+      </template>
+
+      <template v-slot:homeDetail>
+        <div class="homeDetail" v-for="i in allList" :key="i.id">
+          <div class="home-item-ptime">{{ i.ptime }} 天前</div>
+          <div class="home-item-content">{{ i.content }}</div>
         </div>
-        <!-- <div class="divied"></div> -->
-        <div class="mainlist" v-for="item in allList" :key="item.id">
-          <div class="time">{{ item.ptime }} 小时前</div>
-          <div class="content">{{ item.content }}</div>
-        </div>
-      </div>
-      <div class="right" v-if="true">
-        <iframe
-          importance="high"
-          frameborder="no"
-          border="0"
-          marginwidth="0"
-          marginheight="0"
-          width="390"
-          height="390"
-          src="//music.163.com/outchain/player?type=0&id=5233469487&auto=1&height=430"
-        ></iframe>
-      </div>
-    </div>
-    <pop-out
-      v-if="isPop"
-      :obj="send"
-      :res="content"
-      v-on:cancle="canclePop"
-    ></pop-out>
+      </template>
+    </three>
   </div>
 </template>
 
 <script>
 import arrayMethods from "../utils/newArray";
+import Three from "../position/Three.vue";
 export default {
+  props: {},
+  components: { Three },
   data() {
     return {
+      needSlide: true,
+      validateList: {
+        validate1: false,
+        validate2: false,
+        validate3: false,
+      },
+      enable: {
+        backgroundColor: "lightskyblue",
+      },
+      disable: {
+        backgroundColor: "#fff",
+      },
       // 保存文章的四个字段
       id: 0,
       send: {
@@ -86,14 +77,18 @@ export default {
 
   mounted: function () {
     this.allList._proto_ = arrayMethods;
-    this.$http.get("/recent/api/getAllRecent").then((res) => {
+    let url = "/recent/api/getRecent?id=" + String(1);
+    this.$http.get(url).then((res) => {
+      console.log("获取");
       res.data.data.forEach((item) => {
         this.allList.push(item);
       });
 
       var nowTime = Date.parse(new Date());
       this.allList.forEach((item) => {
-        item.ptime = Math.floor((nowTime - item.time) / (3600 * 1000));
+        item.ptime = Math.floor(
+          (nowTime - item.time) / (3600 * 1000 * 24)
+        ).toFixed(0);
       });
     });
   },
@@ -131,17 +126,6 @@ export default {
       });
     },
 
-    upImage() {
-      var index = 0;
-      var file = document.getElementById("input").files[index++];
-      this.imageList.push({
-        index,
-        file,
-      });
-      console.log("imageList: ");
-      console.log(this.imageList);
-    },
-
     submit() {
       if (localStorage.getItem("user_token") !== null) {
         this.isPop = true;
@@ -155,365 +139,45 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@media screen and (min-width: 1100px) {
-  .fake_root {
-    background-image: url("https://cdn.homeblog.top/uPic/TcLeIY.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    .fake_home {
-      display: flex;
-      justify-content: space-between;
-      height: 100%;
+.write {
+  position: relative;
+  top: 2vh;
+  margin: auto;
+  width: 32vw;
+  height: 25vh;
+  background-color: #fff;
+  textarea {
+    margin-top: 2vh;
+    width: 30vw;
+    height: 18vh;
+    font-size: 18px;
+  }
 
-      .left {
-        margin-top: 15px;
-        width: 200px;
-        height: 300px;
-        margin-left: 120px;
-
-        background-color: #fff;
-        box-sizing: border-box;
-        border-radius: 12px;
-
-        .navlist {
-          height: 44px;
-          width: 200px;
-          margin-bottom: 10px;
-
-          .title {
-            cursor: pointer;
-            font-weight: 500;
-            padding: 9px 0;
-            text-align: center;
-            font-size: 16px;
-          }
-        }
-
-        .navlist:focus {
-          background-color: blue;
-        }
-      }
-
-      .main {
-        margin-top: 15px;
-        width: 712px;
-
-        .editor {
-          width: 675px;
-          height: 200px;
-          background-color: #fff;
-          margin: auto;
-          display: flex;
-          flex-direction: column;
-          box-sizing: border-box;
-          border-radius: 12px;
-          margin-bottom: 10px;
-
-          .add {
-            position: relative;
-            top: 0px;
-            width: 620px;
-            height: 116px;
-            background-color: #f4f5f5;
-            box-sizing: border-box;
-
-            margin: auto;
-
-            textarea {
-              line-height: 1.5;
-              letter-spacing: 1px;
-              font-size: 16px;
-              width: 620px;
-              height: 116px;
-              border: none;
-            }
-          }
-
-          .upload {
-            width: 620px;
-            margin: auto;
-            position: relative;
-            top: -10px;
-            display: flex;
-            justify-content: space-between;
-
-            .upImage {
-              cursor: pointer;
-              font-weight: 500;
-            }
-          }
-        }
-        .divied {
-          height: 20px;
-          width: 675px;
-          background-color: #f4f5f5;
-        }
-        .mainlist {
-          width: 675px;
-          height: 300px;
-          background-color: #fff;
-          margin: auto;
-          margin-bottom: 15px;
-          box-sizing: border-box;
-          border-radius: 12px;
-
-          .content {
-            margin-left: 50px;
-            margin-right: 50px;
-            padding: 140px 0;
-            line-height: 1.5;
-            font-size: 22px;
-            font-weight: 450;
-          }
-        }
-      }
-
-      .right {
-        margin-top: 15px;
-        margin-right: 120px;
-        right: 120px;
-        width: 400px;
-        height: 400px;
-        background-color: #fff;
-      }
-    }
+  button {
+    width: 4vw;
+    position: relative;
+    left: 13vw;
   }
 }
 
-@media screen and (max-width: 1100px) and (min-width: 600px) {
-  .fake_root {
-    background-image: url("https://cdn.homeblog.top/uPic/QIv2uI.png");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    .fake_home {
-      
-      display: flex;
-      justify-content: space-between;
-      .left {
-        margin-top: 15px;
-        width: 120px;
-        height: 260px;
-        opacity: 0.78;
-        background-color: #fff;
-        box-sizing: border-box;
-        border-radius: 12px;
-
-        .navlist {
-          height: 44px;
-          width: 120px;
-          margin-bottom: 10px;
-
-          .title {
-            cursor: pointer;
-            font-weight: 500;
-            padding: 9px 6px;
-            text-align: center;
-            font-size: 16px;
-          }
-        }
-
-        .navlist:hover {
-          background-color: lightblue;
-        }
-      }
-
-      .main {
-        margin-top: 15px;
-        width: 520px;
-        opacity: 0.78;
-
-        .editor {
-          width: 480px;
-          height: 134px;
-          background-color: #fff;
-          margin: auto;
-          display: flex;
-          flex-direction: column;
-          box-sizing: border-box;
-          border-radius: 12px;
-          margin-bottom: 10px;
-
-          .add {
-            position: relative;
-            top: 5px;
-            width: 390px;
-            height: 80px;
-            background-color: #fff;
-            box-sizing: border-box;
-
-            margin: auto;
-
-            textarea {
-              line-height: 1.5;
-              letter-spacing: 1px;
-              font-size: 16px;
-              width: 390px;
-              height: 80px;
-              border: none;
-            }
-          }
-
-          .upload {
-            width: 380px;
-            margin: auto;
-            position: relative;
-            top: 0px;
-            display: flex;
-            justify-content: space-between;
-
-            .upImage {
-              cursor: pointer;
-              font-weight: 500;
-            }
-          }
-        }
-        .divied {
-          height: 20px;
-          width: 480px;
-          background-color: #f4f5f5;
-        }
-        .mainlist {
-          width: 480px;
-          height: 120px;
-          background-color: #fff;
-          margin: auto;
-          margin-bottom: 15px;
-          box-sizing: border-box;
-          border-radius: 12px;
-
-          .content {
-            margin-left: 5px;
-            margin-right: 5px;
-            padding: 20px 0;
-            line-height: 1.5;
-            font-size: 16px;
-            font-weight: 450;
-          }
-        }
-      }
-
-      .right {
-        opacity: 0.78;
-        height: 400px;
-        margin-top: 15px;
-        background-color: #fff;
-        border-radius: 12px;
-      }
-    }
+.homeDetail {
+  margin-top: 5vh;
+  width: 45vw;
+  background-color: #fff;
+  .home-item-content {
+    padding: 5vh;
+    text-align: left;
+    font-size: 18px;
+    line-height: 1.7;
+    font-weight: 450;
   }
-}
 
-@media screen and (max-width: 450px) {
-  .fake_home {
-    background-image: url("https://cdn.homeblog.top/uPic/PAUVWh.png");
-    background-size: 100%;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-
-    .left {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 5px;
-
-      .navlist {
-        height: 20px;
-        width: 80px;
-        margin-bottom: 5px;
-
-        .title {
-          cursor: pointer;
-          font-weight: 500;
-          padding: 9px 6px;
-          text-align: center;
-          font-size: 16px;
-        }
-
-        .title:hover {
-          background-color: lightskyblue;
-        }
-      }
-    }
-
-    .main {
-      margin-top: 15px;
-      margin-left: 18px;
-      margin-right: 6px;
-      width: 360px;
-
-      .editor {
-        width: 360px;
-        height: 134px;
-        background-color: #fff;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        border-radius: 12px;
-        margin-bottom: 10px;
-        opacity: 0.6;
-
-        .add {
-          position: relative;
-          top: 5px;
-          width: 320px;
-          height: 80px;
-          background-color: #fff;
-          box-sizing: border-box;
-
-          margin: auto;
-
-          textarea {
-            line-height: 1.5;
-            letter-spacing: 1px;
-            font-size: 16px;
-            width: 300px;
-            height: 80px;
-            border: none;
-          }
-        }
-
-        .upload {
-          width: 320px;
-          margin: auto;
-          position: relative;
-          top: 0px;
-          display: flex;
-          justify-content: space-between;
-
-          button {
-          }
-        }
-      }
-      .divied {
-        height: 20px;
-        width: 380px;
-        background-color: #f4f5f5;
-      }
-      .mainlist {
-        width: 360px;
-        height: 120px;
-        opacity: 0.79;
-        background-color: white;
-        margin: auto;
-        margin-bottom: 15px;
-        box-sizing: border-box;
-        border-radius: 12px;
-
-        .content {
-          opacity: 0.9;
-          margin-left: 5px;
-          margin-right: 5px;
-          padding: 10px 0;
-          line-height: 1.5;
-          font-size: 16px;
-          font-weight: 450;
-        }
-      }
-    }
+  .home-item-ptime {
+    color: #34538b;
+    font-weight: bold;
+    position: absolute;
+    margin-top: 1vh;
+    margin-left: 1vw;
   }
 }
 </style>

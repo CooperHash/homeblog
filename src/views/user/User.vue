@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     saveUser() {
+      this.$store.state.isLogin = true;
       var name = this.name;
       var password = this.password;
       this.$http.post('/user/api/saveUser',{
