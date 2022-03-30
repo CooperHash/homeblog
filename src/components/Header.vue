@@ -25,12 +25,12 @@
             <span class="summary" @click="toDetail">心得</span>
           </div>
         </li>
-        <li class="user-center" v-if="!isLogin">
+        <!-- <li class="user-center" v-if="!isLogin">
           <span class="user" @click="toUser">登录</span>
           <div class="four">
             <span class="record" @click="toRecord">记录</span>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -39,20 +39,9 @@
 export default {
   data() {
     return {
-      isLogin: false,
-      // token: localStorage.getItem("user_token")
+      isLogin: this.$store.state.isLogin,
     };
   },
-  mounted: function() {
-    if(localStorage.getItem('user_token').length !== 0) this.isLogin = true 
-  },
-
-  // watch: {
-  //   token: function(newVal, oldVal) {
-  //     console.log('newToken');
-  //     console.log(newVal);
-  //   }
-  // },
 
   methods: {
     toHome() {
@@ -95,65 +84,44 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@media all and (min-width: 900px) {
+@media all and (min-width: 1400px) {
   .root_header {
     .header {
-      position: absolute;
-      top: 1px;
-      background-color: #d8e5f7;
-      height: 53px;
+      position: sticky;
+      box-sizing: border-box;
+      top: 0px;
       width: 100%;
-      display: block;
+      height: 8vh;
+      background-color: #D8E5F7;
+      border-top: 3px solid #8BA7E3;
+      border-bottom: 2px solid #B4C9F5;
 
       #list {
-        overflow: hidden;
-        list-style: none;
-
         display: flex;
-        justify-content: flex-start;
-      }
+        flex-direction: row;
+        list-style: none;
+        position: relative;
+        top: 1vh;
 
-      #list li {
-        float: left;
-        width: 230px;
-        height: 48px;
-        line-height: 1.7;
-        text-align: center;
-
-        .user-center {
-          position: relative;
-          left: -20px;
-          .user {
-            cursor: pointer;
-          }
-          .four {
-            position: relative;
-            left: 30px;
-            .record {
-              cursor: pointer;
-            }
-          }
+        li {
+          display: flex;
+          flex-direction: column;
+          height: 6vh;
+          width: 12vw;
+          margin-left: 5vw;
         }
+
         .up {
-          font-weight: bold;
-          font-size: 14px;
-          color: #34538b;
-          text-shadow: 1px 1px #e3e3e3;
-          cursor: pointer;
+          font-size: 17px;
         }
 
         .down {
+          font-size: 15px;
           display: flex;
-          width: 120px;
-          justify-content: space-between;
-          margin-top: 2px;
-          margin: auto;
-          font-size: 12px;
-          color: #34538b;
-          text-shadow: 1px 1px #eee;
+          justify-content: space-around;
         }
 
-        .down span {
+        span {
           cursor: pointer;
         }
       }
@@ -161,88 +129,129 @@ export default {
   }
 }
 
-@media all and (max-width: 450px) {
+
+@media all and (min-width: 900px) and (max-width: 1400px){
   .root_header {
     .header {
-      position: absolute;
-      top: 1px;
-      background-color: #d8e5f7;
-      height: 53px;
+      position: sticky;
+      top: 0px;
       width: 100%;
-      display: block;
+      height: 10vh;
+      background-color: #D8E5F7;
 
       #list {
-        overflow: hidden;
-        list-style: none;
         display: flex;
-        justify-content: flex-start;
+        flex-direction: row;
+        list-style: none;
+        position: relative;
+        top: 2vh;
 
-        .home {
-          position: relative;
-          width: 80px;
+        li {
+          display: flex;
+          flex-direction: column;
+          height: 6vh;
+          width: 12vw;
+          margin-left: 5vw;
         }
 
-        .article {
-          position: relative;
-          width: 120px;
-        }
-
-        .keepstudy {
-          position: relative;
-          width: 125px;
-        }
-      }
-
-      #list li {
-        float: left;
-        height: 48px;
-        line-height: 1.7;
-        text-align: center;
         .up {
-          font-weight: bold;
-          font-size: 13px;
-          color: #34538b;
-          text-shadow: 1px 1px #e3e3e3;
+          font-size: 14px;
+        }
+
+        .down {
+          font-size: 12px;
+          display: flex;
+          justify-content: space-around;
+        }
+
+        span {
           cursor: pointer;
         }
+      }
+    }
+  }
+}
 
-        .first {
+@media all and (min-width: 400px) and (max-width: 900px){
+  .root_header {
+    .header {
+      position: sticky;
+      top: 0px;
+      width: 100%;
+      height: 12vh;
+      background-color: lightblue;
+
+      #list {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        position: relative;
+        top: 2vh;
+
+        li {
           display: flex;
-          width: 60px;
-          justify-content: space-between;
-          margin-top: 2px;
-          color: #34538b;
-          text-shadow: 1px 1px #eee;
-
-          span {
-            font-size: 11px;
-          }
+          flex-direction: column;
+          background-color: red;
+          height: 8vh;
+          width: 14vw;
+          margin-left: 5vw;
         }
 
-        .second {
-          display: flex;
-          width: 105px;
-          justify-content: space-between;
-          margin-top: 2px;
-          color: #34538b;
-
-          text-shadow: 1px 1px #eee;
-          span {
-            font-size: 11px;
-          }
+        .up {
+          font-size: 14px;
         }
 
-        .third {
+        .down {
+          font-size: 12px;
           display: flex;
-          width: 90px;
-          justify-content: space-between;
-          margin-top: 2px;
-          color: #34538b;
-          text-shadow: 1px 1px #eee;
+          justify-content: space-around;
+        }
 
-          span {
-            font-size: 11px;
-          }
+        span {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media all and (min-width: 280px) and (max-width: 400px){
+  .root_header {
+    position: sticky;
+      top: 0px;
+      width: 100%;
+      height: 7vh;
+      background-color: lightblue;
+    .header {
+      position: relative;
+
+      #list {
+        display: flex;
+        list-style: none;
+        position: absolute;
+        left: 0%;
+
+        li {
+          display: flex;
+          flex-direction: column;
+          background-color: red;
+          height: 5vh;
+          width: 28vw;
+
+        }
+
+        .up {
+          font-size: 12px;
+        }
+
+        .down {
+          font-size: 10px;
+          display: flex;
+          justify-content: space-around;
+        }
+
+        span {
+          cursor: pointer;
         }
       }
     }

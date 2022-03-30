@@ -1,87 +1,49 @@
 <template>
-  <div class="showArticle_root">
-    <!-- <a-list :grid="{ gutter: 16, column: 4 }" :data-source="array">
-      <a-list-item slot="renderItem" slot-scope="item">
-        <a-card :title="item.title"> Card content </a-card>
-      </a-list-item>
-    </a-list> -->
-    <a-back-top />
-    <div class="left"></div>
-    <div class="middle">
-      <div class="category">
-        <!-- <div class="navList">
-          <Menu :menuList="menu"></Menu>
-        </div> -->
-        <div
-          class="navList"
-          @click="toDiff(item.id)"
-          v-for="item in navList"
-          :key="item.id"
-        >
-          <div class="nav">{{ item.nav }}</div>
-        </div>
-      </div>
-      <div class="search">
-        <input v-model="content" placeholder="检索文章" id="search" />
-      </div>
-      <div class="list">
-        <div
-          class="itemList"
-          v-for="item in array"
-          :key="item.id"
-          @click="toDetail(item.id)"
-        >
-          <div class="items">
-            <div class="title">{{ item.title }}</div>
-            <div class="info">
-              内容简介：
-              {{
-                (item.info =
-                  item.info.length > 20
-                    ? item.info.substring(0, 35)
-                    : item.info)
-              }}
-            </div>
+  <div class="showArticle_page">
+    <three>
+      <template v-slot:navList>
+        <li :style="validateList.validate1 ? enable : disable" @click="toAll">全部</li>
+        <li :style="validateList.validate2 ? enable : disable" @click="toJs">Js</li>
+        <li :style="validateList.validate3 ? enable : disable" @click="toVue">Vue</li>
+      </template>
+      <template v-slot:article>
+        <div class="article">
+          <div class="item" v-for="i in array" :key="i.id" @click="toDetail(i.id)">
+            <div class="item-title">{{ i.title }}</div>
+            <div class="item-info">{{ i.info.substring(0, 36) }}</div>
           </div>
-          <a-divider />
         </div>
-      </div>
-    </div>
-    <div class="right">
-      <add-article></add-article>
-    </div>
+      </template>
+      <template v-slot:search>
+        <div class="search">
+          <input placeholder="检索文章" />
+        </div>
+      </template>
+    </three>
   </div>
 </template>
 
 <script>
-// import Menu from '../../components/Menu.vue'
+import Three from "../../position/Three.vue";
 export default {
+  components: { Three },
   data() {
     return {
       content: "",
-      navList: [
-        { id: 0, nav: "全部" },
-        { id: 1, nav: "JavaScript" },
-        { id: 2, nav: "V8" },
-        { id: 3, nav: "CSS" },
-        { id: 4, nav: "Node" },
-        { id: 5, nav: "Vue" },
-        { id: 6, nav: "React" },
-        { id: 7, nav: "FP" },
-      ],
+      validateList: {
+        validate1: false,
+        validate2: false,
+        validate3: false,
+      },
+      enable: {
+        backgroundColor: "lightskyblue",
+      },
+      disable: {
+        backgroundColor: "#fff",
+      },
       array: [],
-      menu: [
-        { id: 0, name: 'JS'},
-        { id: 1, name: 'Vue'},
-        { id: 2, name: '杂谈'}
-      ]
     };
   },
-
-  // components: {
-  //   Menu
-  // },
-
 
   mounted: function () {
     console.log("欢迎来到文章仓库~");
@@ -95,7 +57,7 @@ export default {
     });
     this.$store.dispatch("setDefaultContent");
 
-    const search = document.getElementById("search");
+    let search = document.querySelector('input');
     var throttled = this.lodash.throttle(this.find, 2000);
     search.addEventListener("input", throttled);
   },
@@ -148,7 +110,7 @@ export default {
       }
     },
 
-    getAll() {
+    toAll() {
       this.array = [];
       this.$http.get("/blog/api/getArticle").then((res) => {
         res.data.data.forEach((element) => {
@@ -157,7 +119,7 @@ export default {
       });
     },
 
-    getJs() {
+    toJs() {
       this.array = [];
       this.$http.get("/blog/api/getJs").then((res) => {
         res.data.data.forEach((item) => {
@@ -166,7 +128,7 @@ export default {
       });
     },
 
-    getV() {
+    toVue() {
       this.array = [];
       this.$http.get("/blog/api/getV").then((res) => {
         res.data.data.forEach((item) => {
@@ -182,9 +144,10 @@ export default {
       this.array = [];
       this.$http.get("/blog/api/getArticle").then((res) => {
         res.data.data.forEach((element) => {
-          const len = element.info.length;
           var info = element.info;
-          if (info.search(target) !== -1) this.array.push(element);
+          if (info.search(target) !== -1) {
+            this.array.push(element);
+          }
         });
       });
     },
@@ -194,86 +157,49 @@ export default {
 
 <style lang="less" scoped>
 @media all and (min-width: 860px) {
-  .showArticle_root {
-    display: flex;
-    .left {
-      width: 33%;
-    }
-
-    .middle {
-      width: 100%;
-      background-color: #fff;
-      .category {
-        margin-left: 20px;
-        margin-right: 20px;
-        display: flex;
-        justify-content: space-between;
-
-      }
-      .search {
-        position: relative;
-        left: 600px;
-        width: 106px;
-        height: 41px;
-        border: solid lightskyblue;
-
-        input {
-          width: 100px;
-          height: 35px;
-          outline: none;
-        }
-      }
-      .list {
-        display: flex;
-        flex-direction: column;
-
-        .itemList {
-          width: 720px;
-          margin: auto;
-          margin-bottom: 0px;
-          .items {
-            margin: auto;
-            margin-bottom: 12px;
-            width: 720px;
-            height: 180px;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            border-radius: 12px;
-            // box-shadow: 0 2px 8px 0 rgb(0, 0, 0 / 2%);
-
-            .title {
-              cursor: pointer;
-              line-height: 1.25;
-              text-align: justify;
-              font-size: 24px;
-              margin-top: 10px;
-              font-weight: bolder;
-              // color: #527ed1;
-              color: #1d2129;
-              margin-left: 4px;
-              height: 50px;
-              padding: 10px;
-            }
-
-            .info {
-              height: auto;
-              margin-top: 20px;
-              margin-left: 4px;
-              text-align: left;
-              align-content: center;
-              font-size: 20px;
-              font-weight: bolder;
-              color: #86909c;
-              padding: 10px;
-            }
-          }
-        }
+  .showArticle_page {
+    .search {
+      position: relative;
+      top: 1vh;
+      margin: auto;
+      width: 22vw;
+      height: 12vh;
+      input {
+        font-size: 16px;
+        width: 20vw;
+        height: 10vh;
       }
     }
 
-    .right {
-      width: 33%;
+    .article {
+      margin-top: 13vh;
+      overflow: scroll;
+      justify-content: center;
+      align-items: center;
+      width: 48vw;
+      margin: auto;
+      .item {
+        margin-top: 5vh;
+        width: 45vw;
+        background-color: #fff;
+        .item-info {
+          padding: 6vh;
+          text-align: left;
+          font-weight: 450;
+          font-size: 18px;
+          line-height: 16px;
+          color: #333;
+        }
+
+        .item-title {
+          position: absolute;
+          color: #34538b;
+          font-weight: bold;
+          font-size: 18px;
+          margin-top: 1vh;
+          margin-left: 1vw;
+        }
+      }
     }
   }
 }
@@ -291,6 +217,7 @@ export default {
     .middle {
       width: 100%;
       background-color: #fff;
+      opacity: 0.78;
       .category {
         margin-left: 20px;
         margin-right: 20px;
@@ -299,11 +226,24 @@ export default {
         flex-wrap: wrap;
         height: 80px;
 
-        .navList {          
+        .navList {
+          width: 86px;
+          height: 42px;
+          border-radius: 6px;
+          background-color: #f6f7f8;
+          cursor: pointer;
+
+          .nav {
+            color: #61666d;
+            font-weight: 500;
+            padding: 10px 0;
+            font-size: 14px;
+          }
         }
       }
       .search {
         position: relative;
+        left: 70px;
         top: -30px;
         input {
           width: 120px;
