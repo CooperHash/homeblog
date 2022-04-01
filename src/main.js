@@ -4,8 +4,6 @@ import router from './router'
 import store from './store'
 import Icon from 'ant-design-vue/lib/icon'
 import Button from 'ant-design-vue/lib/button';
-import Drop from 'ant-design-vue/lib/dropdown'
-import Back from 'ant-design-vue/lib/back-top'
 import 'ant-design-vue/dist/antd.css';
 import Header from './components/Header.vue'
 import Add from './components/Add.vue'
@@ -20,7 +18,9 @@ import splitSong from './utils/splitSong'
 import addEvent from './utils/domHandler/addEvent'
 import getClassList from './utils/domHandler/getClassList'
 import APlayer from '@moefe/vue-aplayer'
+import Highlight from './utils/highlight'
 Vue.use(APlayer);
+Vue.use(Highlight);
 Vue.component('pop-out',Pop);
 Vue.component('add-article',Add);
 Vue.component('blog-header',Header);
@@ -29,8 +29,7 @@ Vue.component('article-detail',ArticleDetail);
 Vue.component('get-language',Language);
 Vue.component(Button.name, Button);
 Vue.component(Icon.name, Icon)
-Vue.component('a-dropdown-button',Drop)
-Vue.component('a-dropdown-button',Drop);
+
 
 Vue.prototype.$http = instance
 Vue.prototype.isValidate = isValidate

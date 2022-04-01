@@ -20,6 +20,7 @@
             <div class="swiper-button-next" slot="button-next"></div>
           </swiper>
         </div>
+        <slot name="article"></slot>
         <slot name="bookList"></slot>
         <slot name="reading"></slot>
         <slot name="search"></slot>
@@ -166,6 +167,19 @@ export default {
         width: 48vw;
         margin: auto;
         border-radius: 20px;
+      }
+    }
+
+    .article {
+      width: 48vw;
+      margin: auto;
+
+      .content {
+        font-size: 18px;
+        line-height: 1.7;
+        text-align: left;
+        width: 46vw;
+        margin: auto;
       }
     }
 

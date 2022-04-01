@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
-let instance = axios.create({baseURL: "http://localhost:3004/all"})
+let instance = axios.create({baseURL: "https://homeblog.top/all"})
 instance.interceptors.request.use(
   config => {
     // if (localStorage.getItem("user_token") !== null) { //判断token是否存在
