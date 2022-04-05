@@ -1,54 +1,5 @@
 # HomeBlog
-
-### PC端
-
-<img src="https://cdn.homeblog.top/uPic/5RX0yf.png">
-<br>
-
-
-<img src="https://cdn.homeblog.top/uPic/ttvbUW.png">
-
-<br>
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/jgRbUk.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/i6iGWV.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/N2Ni8f.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/ak9jXf.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/5mI8oz.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/9oQqOf.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/OHXJsP.png">
-
-<br>
-
-### 移动端
-
-<img src="https://cdn.homeblog.top/uPic/rYU6vj.png">
-
-<br>
-
-<img src="https://cdn.homeblog.top/uPic/vvPi6a.png">
-
-<br>
+https://hzk.homeblog.top
 
 
 ## 技术栈
